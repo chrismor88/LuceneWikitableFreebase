@@ -5,9 +5,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import bean.WikipediaTable;
 import core.Message;
+import util.NormalizerTableRows;
 
 public class DocumentExtractor extends Thread{
 
@@ -47,11 +50,13 @@ public class DocumentExtractor extends Thread{
 					}
 				}
 				else{
+					List<String> tableRows = new LinkedList<String>();
 					while(!currentLine.equals("</doc>") && currentLine!=null){
-						wikiTable.addRow(currentLine);
+						tableRows.addAll(NormalizerTableRows.normalizesTableRows(currentLine));
 						currentLine = reader.readLine();
 					}
 					bufferTables.put(wikiTable);
+					wikiTable.addRow(currentLine);
 				}
 			}
 			wikiTable = new WikipediaTable();

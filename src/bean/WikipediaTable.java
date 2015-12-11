@@ -82,6 +82,10 @@ public class WikipediaTable {
 		this.rows.add(row);
 	}
 	
+	public void setListOfRows(List<String> rows){
+		this.rows=rows;
+	}
+	
 	public List<String> firstFourRows(){
 		int maxShowRows = 4;
 		if(rows.size() < maxShowRows)
